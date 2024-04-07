@@ -31,6 +31,9 @@ func GetAuthorizationCode(ctx context.Context, authorizationURL string, redirect
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
 		quit <- r.URL.Query().Get("code")
 	})
+	mux.HandleFunc("GET /favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", u.Port()),
 		Handler: mux,
